@@ -29,6 +29,8 @@ function Board({ id, title, write, date, onCheckboxChange}) {
 export default function BoardList() {
   const [list, setList] = useState([]);
   const [checkList, setCheckList] = useState([]);
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
+  console.log(API_BASE);
 
   const onCheckboxChange = (checked, id)=>{
     setCheckList(prev=>{
@@ -41,7 +43,7 @@ export default function BoardList() {
   }
   const getList = useCallback(() => {
     console.log('getList 실행');
-    Axios.get('http://localhost:8000/list')
+    Axios.get(`${API_BASE}/list`)
       .then(response => {
         const { data } = response;
         console.log(data);
@@ -68,7 +70,7 @@ export default function BoardList() {
 
     let boardIdList = checkList.join();
 
-    Axios.post('http://localhost:8000/delete', {
+    Axios.post(`${API_BASE}/delete`, {
       boardIdList
     })
     .then(() => {
